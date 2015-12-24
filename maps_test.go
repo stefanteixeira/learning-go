@@ -1,8 +1,8 @@
 package main
 
 import (
-  "reflect"
   "testing"
+  "github.com/stretchr/testify/assert"
 )
 
 func TestMaps(t *testing.T) {
@@ -13,7 +13,5 @@ func TestMaps(t *testing.T) {
     "J": 1,
     "C": 1}
 
-  if !reflect.DeepEqual(stats, expected) {
-    t.Error("Error getting stats!")
-  }
+  assert.Equal(t, stats, expected)
 }
