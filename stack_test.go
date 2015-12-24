@@ -32,3 +32,13 @@ func TestStackPop(t *testing.T) {
 
   assert.Equal(t, stack.Size(), 1)
 }
+
+func TestPopEmptyStack(t *testing.T) {
+  stack := Stack{}
+
+  _, err := stack.Pop()
+
+  if assert.Error(t, err, "An error occurred") {
+	   assert.Equal(t, err.Error(), "Empty stack!")
+  }
+}
