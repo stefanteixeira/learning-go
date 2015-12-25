@@ -1,4 +1,4 @@
-package main
+package quicksort
 
 func quicksort(numbers []int) []int {
 	if len(numbers) <= 1 {
