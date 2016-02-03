@@ -69,6 +69,8 @@ func extractUrl(r *http.Request) string {
 }
 
 func main() {
+  url.ConfigRepository(url.NewInMemoryRepository())
+
   http.HandleFunc("/api/shorten", Shorten)
   http.HandleFunc("/r/", Redirect)
 
