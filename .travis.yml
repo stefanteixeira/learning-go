@@ -5,6 +5,7 @@ go:
 
 install:
   - go get github.com/stretchr/testify
+  - go get github.com/emicklei/forest
   - go get github.com/axw/gocov/gocov
   - go get github.com/modocache/gover
   - go get github.com/mattn/goveralls
