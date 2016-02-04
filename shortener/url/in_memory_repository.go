@@ -2,10 +2,11 @@ package url
 
 type inMemoryRepository struct {
   urls map[string]*Url
+  clicks map[string]int
 }
 
 func NewInMemoryRepository() *inMemoryRepository {
-  return &inMemoryRepository{make(map[string]*Url)}
+  return &inMemoryRepository{make(map[string]*Url), make(map[string]int)}
 }
 
 func (r *inMemoryRepository) IdExists(id string) bool {
@@ -29,4 +30,12 @@ func (r *inMemoryRepository) FindByUrl(url string) *Url {
 func (r *inMemoryRepository) Save(url Url) error {
   r.urls[url.Id] = &url
   return nil
+}
+
+func (r *inMemoryRepository) RegisterClick(id string) {
+  r.clicks[id] += 1
+}
+
+func (r *inMemoryRepository) FindClicks(id string) int {
+  return r.clicks[id]
 }

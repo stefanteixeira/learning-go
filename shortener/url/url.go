@@ -16,6 +16,8 @@ type Repository interface {
   FindById(id string) *Url
   FindByUrl(url string) *Url
   Save(url Url) error
+  RegisterClick(id string)
+  FindClicks(id string) int
 }
 
 var repo Repository
@@ -29,13 +31,22 @@ func ConfigRepository(r Repository) {
 }
 
 type Url struct {
-  Id string
-  CreationTime time.Time
-  OriginalUrl string
+  Id string `json:"id"`
+  CreationTime time.Time `json:"creation"`
+  OriginalUrl string `json:"origUrl"`
+}
+
+type Stats struct {
+  Url *Url `json:"url"`
+  Clicks int `json:"clicks"`
 }
 
 func Find(id string) *Url {
   return repo.FindById(id)
+}
+
+func RegisterClick(id string) {
+  repo.RegisterClick(id)
 }
 
 func FindOrCreateUrl(origUrl string) (u *Url, new bool, err error) {
@@ -50,6 +61,11 @@ func FindOrCreateUrl(origUrl string) (u *Url, new bool, err error) {
   url := Url{generateId(), time.Now(), origUrl}
   repo.Save(url)
   return &url, true, nil
+}
+
+func (u *Url) Stats() *Stats {
+  clicks := repo.FindClicks(u.Id)
+  return &Stats{u, clicks}
 }
 
 func generateId() string {
